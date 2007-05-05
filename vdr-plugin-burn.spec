@@ -3,7 +3,7 @@
 %define name	vdr-plugin-%plugin
 %define version	0.1.0
 %define prerel	pre21
-%define rel	2
+%define rel	3
 %define release	%mkrel 0.%prerel.%rel
 
 Summary:	VDR plugin: Versatile convert-and-burn plugin
