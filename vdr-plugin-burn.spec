@@ -15,6 +15,7 @@ License:	GPL
 URL:		http://www.magoa.net/linux/contrib/
 Source:		http://www.magoa.net/linux/contrib/vdr-%plugin-%version-%prerel.tar.bz2
 Patch1:		burn-0.1.0-pre21-jpackage-java.patch
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	vdr-devel >= 1.4.1-6
 BuildRequires:	gd-devel
 BuildRequires:	boost-devel
