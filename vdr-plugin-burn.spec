@@ -2,8 +2,10 @@
 %define plugin	burn
 %define name	vdr-plugin-%plugin
 %define version	0.1.0
-%define prerel	pre21
-%define rel	8
+# See patch4
+%define prerel	pre22
+%define tarrel	pre21
+%define rel	1
 %define release	%mkrel 0.%prerel.%rel
 
 Summary:	VDR plugin: Versatile convert-and-burn plugin
@@ -13,10 +15,22 @@ Release:	%release
 Group:		Video
 License:	GPL
 URL:		http://www.magoa.net/linux/contrib/
-Source:		http://www.magoa.net/linux/contrib/vdr-%plugin-%version-%prerel.tar.bz2
+Source:		http://www.magoa.net/linux/contrib/vdr-%plugin-%version-%tarrel.tar.bz2
 Patch1:		burn-0.1.0-pre21-jpackage-java.patch
+Patch8:		burn-handle-new-projectx.patch
+# e-tobi:
+Patch2:		burn-90_i18n-fix.dpatch
+Patch3:		burn-92_requantfactor.dpatch
+Patch4:		93_burn-0.1.0-pre22_i18n-gettext.dpatch
+Patch5:		94_burnfr_FR.dpatch
+# Ville Skyttä:
+Patch6:		vdr-burn-0.1.0-pre21-gcc43.patch
+# Gentoo:
+Patch7:		charset-vdr-1.5.diff
+# Rolf Ahrenberg, http://www.saunalahti.fi/~rahrenbe/vdr/patches/
+Patch9:		vdr-burn-cvs-subpicture-id.diff
 BuildRoot:	%{_tmppath}/%{name}-buildroot
-BuildRequires:	vdr-devel >= 1.4.1-6
+BuildRequires:	vdr-devel >= 1.6.0
 BuildRequires:	gd-devel
 BuildRequires:	boost-devel
 Requires:	vdr-abi = %vdr_abi
@@ -25,7 +39,8 @@ Requires:	m2vrequantizer
 Requires:	dvdauthor
 Requires:	dvd+rw-tools
 Requires:	mjpegtools
-Requires:	pxsup2dast
+Requires:	eject
+Suggests:	pxsup2dast
 %if %mdkversion >= 200710
 Requires:	cdrkit
 Requires:	cdrkit-genisoimage
@@ -49,11 +64,21 @@ projectx and enable ProjectX in the plugin setup menu.
 cd %plugin
 find -name CVS -print0 | xargs -0 rm -rf
 %patch1 -p1 -b .java
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p0
+%patch7 -p1
+%patch8 -p1
+%patch9 -p0
 
 %if %mdkversion >= 200710
 perl -pi -e 's/mkisofs/genisoimage/' *.sh
 perl -pi -e 's/cdrecord/wodim/' *.sh
 %endif
+
+%vdr_plugin_prep
 
 %vdr_plugin_params_begin %plugin
 # directory for temporary files
