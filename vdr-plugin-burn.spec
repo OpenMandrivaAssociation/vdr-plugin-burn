@@ -5,7 +5,7 @@
 # See patch4
 %define prerel	pre22
 %define tarrel	pre21
-%define rel	1
+%define rel	2
 %define release	%mkrel 0.%prerel.%rel
 
 Summary:	VDR plugin: Versatile convert-and-burn plugin
