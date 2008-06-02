@@ -92,14 +92,14 @@ param=--datadir=DATADIR
 var=DVD_DEVICE
 param=--dvd=DVD_DEVICE
 # ISO image storage directory
-# default: %{_localstatedir}/vdr/iso-images
+# default: %{_localstatedir}/lib/vdr/iso-images
 var=ISO_DIR
 param=--iso=ISO_DIR
 %vdr_plugin_params_end
 
 %build
 cd %plugin
-%vdr_plugin_build ISODIR=%{_localstatedir}/vdr/iso-images
+%vdr_plugin_build ISODIR=%{_localstatedir}/lib/vdr/iso-images
 
 %install
 rm -rf %{buildroot}
@@ -114,7 +114,7 @@ install -d -m755 %{buildroot}%{_vdr_plugin_cfgdir}/%{plugin}
 install -d -m755 %{buildroot}%{_vdr_plugin_cfgdir}/%{plugin}/skins
 
 cp -a burn/* %{buildroot}%{_vdr_plugin_cfgdir}/%{plugin}
-install -d -m755 %{buildroot}%{_localstatedir}/vdr/iso-images
+install -d -m755 %{buildroot}%{_localstatedir}/lib/vdr/iso-images
 rm %{buildroot}%{_vdr_plugin_cfgdir}/%{plugin}/counters/standard
 
 %clean
@@ -133,7 +133,7 @@ rm -rf %{buildroot}
 %doc %plugin/CONTRIBUTORS %plugin/HISTORY %plugin/README
 %attr(-,vdr,vdr) %dir %{_vdr_plugin_cfgdir}/%{plugin}
 %attr(-,vdr,vdr) %dir %{_vdr_plugin_cfgdir}/%{plugin}/counters
-%attr(-,vdr,vdr) %dir %{_localstatedir}/vdr/iso-images
+%attr(-,vdr,vdr) %dir %{_localstatedir}/lib/vdr/iso-images
 %{_vdr_plugin_cfgdir}/%{plugin}/skins
 %{_vdr_plugin_cfgdir}/%{plugin}/*.mp2
 %{_vdr_plugin_cfgdir}/%{plugin}/fonts
