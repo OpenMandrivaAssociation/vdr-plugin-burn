@@ -8,6 +8,9 @@
 %define rel	2
 %define release	%mkrel 0.%prerel.%rel
 
+# backportability
+%define _localstatedir %{_var}
+
 Summary:	VDR plugin: Versatile convert-and-burn plugin
 Name:		%name
 Version:	%version
