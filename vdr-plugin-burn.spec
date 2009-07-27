@@ -5,7 +5,7 @@
 # See patch4
 %define prerel	pre22
 %define tarrel	pre21
-%define rel	3
+%define rel	4
 %define release	%mkrel 0.%prerel.%rel
 
 # backportability
