@@ -1,11 +1,9 @@
 
 %define plugin	burn
 %define name	vdr-plugin-%plugin
-%define version	0.1.0
-# See patch4
-%define prerel	pre22
-%define tarrel	pre21
-%define rel	4
+%define version	0.2.0
+%define prerel	beta4
+%define rel	1
 %define release	%mkrel 0.%prerel.%rel
 
 # backportability
@@ -16,22 +14,12 @@ Name:		%name
 Version:	%version
 Release:	%release
 Group:		Video
-License:	GPL
-URL:		http://www.magoa.net/linux/contrib/
-Source:		http://www.magoa.net/linux/contrib/vdr-%plugin-%version-%tarrel.tar.bz2
+License:	GPL+
+URL:		http://projects.vdr-developer.org/projects/plg-burn/
+Source:		vdr-%plugin-%version-%prerel.tgz
 Patch1:		burn-0.1.0-pre21-jpackage-java.patch
-Patch8:		burn-handle-new-projectx.patch
-# e-tobi:
-Patch2:		burn-90_i18n-fix.dpatch
-Patch3:		burn-92_requantfactor.dpatch
-Patch4:		93_burn-0.1.0-pre22_i18n-gettext.dpatch
-Patch5:		94_burnfr_FR.dpatch
-# Ville Skyttä:
-Patch6:		vdr-burn-0.1.0-pre21-gcc43.patch
-# Gentoo:
-Patch7:		charset-vdr-1.5.diff
-# Rolf Ahrenberg, http://www.saunalahti.fi/~rahrenbe/vdr/patches/
-Patch9:		vdr-burn-cvs-subpicture-id.diff
+# add subtitle track descriptions also when no dvd menu is created (untested)
+Patch9:		vdr-burn-subpicture-id-when-no-menu.patch
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 BuildRequires:	vdr-devel >= 1.6.0
 BuildRequires:	gd-devel
@@ -63,18 +51,9 @@ If you wish to have subtitles support, you have to install package
 projectx and enable ProjectX in the plugin setup menu.
 
 %prep
-%setup -q -c
-cd %plugin
+%setup -q -n %plugin-%version-%prerel
 find -name CVS -print0 | xargs -0 rm -rf
-%patch1 -p1 -b .java
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p0
-%patch7 -p1
-%patch8 -p1
-%patch9 -p0
+%apply_patches
 
 %if %mdkversion >= 200710
 perl -pi -e 's/mkisofs/genisoimage/' *.sh
@@ -101,12 +80,10 @@ param=--iso=ISO_DIR
 %vdr_plugin_params_end
 
 %build
-cd %plugin
 %vdr_plugin_build ISODIR=%{_localstatedir}/lib/vdr/iso-images
 
 %install
 rm -rf %{buildroot}
-cd %plugin
 %vdr_plugin_install
 
 install -d -m755 %{buildroot}%{_bindir}
@@ -131,9 +108,9 @@ rm -rf %{buildroot}
 %postun
 %vdr_plugin_postun %plugin
 
-%files -f %plugin/%plugin.vdr
+%files -f %plugin.vdr
 %defattr(-,root,root)
-%doc %plugin/CONTRIBUTORS %plugin/HISTORY %plugin/README
+%doc HISTORY README
 %attr(-,vdr,vdr) %dir %{_vdr_plugin_cfgdir}/%{plugin}
 %attr(-,vdr,vdr) %dir %{_vdr_plugin_cfgdir}/%{plugin}/counters
 %attr(-,vdr,vdr) %dir %{_localstatedir}/lib/vdr/iso-images
