@@ -1,0 +1,21 @@
+Index: burn-0.2.0-beta4/config.c
+===================================================================
+--- burn-0.2.0-beta4/config.c
++++ burn-0.2.0-beta4/config.c	2010-09-04 23:28:41.541930594 +0300
+@@ -251,8 +251,14 @@
+ 					audioTrack++;
+ 				}
+ 
+-// 				m_file << "<subpicture " << get_audio_language( track_info::get_language_codes()[ setup::get().DefaultLanguage ] )
+-//				  << "/>" << endl
++				const_track_filter subtitleTracks( rec->get_tracks(), track_info::streamtype_subtitle, track_predicate::used );
++				const_track_filter::iterator subtitleTrack = subtitleTracks.begin();
++				while  (subtitleTrack != subtitleTracks.end()) {
++					const track_info& track = *subtitleTrack;
++					m_file << "      <subpicture " << get_audio_language(track.language) << "/>"
++					  << "  <!-- " << track.language << " - " << track.description << " -->" << endl;
++					subtitleTrack++;
++				}
+ 				m_file << "      <pgc>" << endl
+ 				  << "        <vob file=\"" << rec->get_movie_path()
+ 				  << "\" chapters=\""
