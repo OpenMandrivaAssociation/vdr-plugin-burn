@@ -1,17 +1,14 @@
-
 %define plugin	burn
-%define name	vdr-plugin-%plugin
-%define version	0.2.0
 %define prerel	beta4
-%define rel	2
+%define rel	3
 %define release	0.%prerel.%rel
 
 # backportability
 %define _localstatedir %{_var}
 
 Summary:	VDR plugin: Versatile convert-and-burn plugin
-Name:		%name
-Version:	%version
+Name:		vdr-plugin-%plugin
+Version:	0.2.0
 Release:	%release
 Group:		Video
 License:	GPL+
@@ -78,7 +75,6 @@ param=--iso=ISO_DIR
 %vdr_plugin_build ISODIR=%{_localstatedir}/lib/vdr/iso-images
 
 %install
-rm -rf %{buildroot}
 %vdr_plugin_install
 
 install -d -m755 %{buildroot}%{_bindir}
@@ -95,10 +91,6 @@ rm %{buildroot}%{vdr_plugin_cfgdir}/%{plugin}/counters/standard
 %post
 %{_bindir}/gpasswd -a vdr cdrom >/dev/null
 %{_bindir}/gpasswd -a vdr cdwriter >/dev/null
-%vdr_plugin_post %plugin
-
-%postun
-%vdr_plugin_postun %plugin
 
 %files -f %plugin.vdr
 %defattr(-,root,root)
