@@ -47,7 +47,7 @@ projectx and enable ProjectX in the plugin setup menu.
 %prep
 %setup -q -n %plugin-%version-%prerel
 find -name CVS -print0 | xargs -0 rm -rf
-%apply_patches
+%autopatch -p1
 
 perl -pi -e 's/mkisofs/genisoimage/' *.sh
 perl -pi -e 's/cdrecord/wodim/' *.sh
