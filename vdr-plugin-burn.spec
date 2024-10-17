@@ -12,7 +12,7 @@ Version:	0.2.0
 Release:	%release
 Group:		Video
 License:	GPL+
-URL:		http://projects.vdr-developer.org/projects/plg-burn/
+URL:		https://projects.vdr-developer.org/projects/plg-burn/
 Source:		vdr-%plugin-%version-%prerel.tgz
 Patch1:		burn-0.1.0-pre21-jpackage-java.patch
 # add subtitle track descriptions also when no dvd menu is created (untested)
